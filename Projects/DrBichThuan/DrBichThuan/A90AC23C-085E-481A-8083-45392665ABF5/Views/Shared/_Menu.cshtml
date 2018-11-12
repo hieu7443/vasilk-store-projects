@@ -1,0 +1,74 @@
+﻿@{ 
+    ContactDetail contact = AppConstants.ContactDetail;
+    MenuItem[] menu = AppConstants.Menu;
+}
+<div class="position-relative d-none d-lg-block">
+    <div id="fixed">
+        @if (menu != null && menu.Length > 0)
+        {
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white text-center">@Html.Dictionary("/Content/chuyen-khoa", "CHUYÊN KHOA")</div>
+                <ul class="list-group list-group-flush">
+                    @foreach (MenuItem item in menu.OrderBy(i => i.Index))
+                    {
+                        <li class="list-group-item @(item.IsActive ? "active" : "")"><a class="d-block @(item.IsActive ? "text-white" : "text-secondary")" href="@item.Url" target="_self">@item.Title</a></li>
+                    }
+                </ul>
+            </div>
+        }
+        @if (contact != null)
+        {
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white text-center"><i class="icon fa fa-calendar"></i> @Html.Dictionary("/Content/lich-lam-viec", "Lịch làm việc")</div>
+                <div class="card-body text-center p-0 pt-2">
+                    @foreach (WorkHour workHour in contact.GetWorkHours().OrderBy(i => i.Index))
+                    {
+                        <div class="pb-2">
+                            <div class="text-secondary">
+                                <span><i class="icon fa fa-star"></i> @workHour.Day</span>
+                            </div>
+                            <div class="text-red">
+                                @foreach (string time in workHour.GetTimes())
+                                {
+                                    <span>@time</span><br />
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white text-center"><i class="icon fa fa-user-circle"></i> <a class="text-white" href="@contact.Url" target="_self">@Html.Dictionary("/Content/lien-he", "Liên hệ")</a></div>
+                <div class="card-body text-center p-0 pt-2">
+                    @foreach (string phone in contact.GetPhones())
+                    {
+                        <div class="pb-2">
+                            <a class="text-secondary" href="tel:@phone" target="_blank"><i class="icon fa fa-phone"></i> @phone</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@if (menu != null && menu.Length > 0)
+{
+    <div class="d-lg-none mb-3">
+        <div>
+            <button class="btn bg-primary text-white w-100" type="button" data-toggle="collapse" data-target="#menu-mobile" aria-expanded="false" aria-controls="collapseExample">
+                @Html.Dictionary("/Content/chuyen-khoa", "CHUYÊN KHOA")
+                <i class="icon fa fa-angle-down"></i>
+            </button>
+        </div>
+        <div class="collapse" id="menu-mobile">
+            <div class="card card-body p-0">
+                <ul class="list-group list-group-flush">
+                    @foreach (MenuItem item in menu.OrderBy(i => i.Index))
+                    {
+                        <li class="list-group-item @(item.IsActive ? "active" : "")"><a class="d-block @(item.IsActive ? "text-white" : "text-secondary")" href="@item.Url" target="_self">@item.Title</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,31 @@
+﻿@{ 
+    BaseHeadData data = CustomContext.Item?.Cast<BaseHeadData>();
+}
+@if (data != null)
+{
+    MetaData[] baseMeta = data.GetMetaData();
+    PageContent pageContent = CustomContext.Item?.Cast<PageContent>();
+    MetaData[] pageMeta = pageContent?.GetMetaData();
+    string icon = pageContent?.Icon;
+    <title>@data.Title</title>
+    <link rel="icon" href="@icon"/>
+    <link rel="shortcut icon" href="@icon" />
+    <meta name="description" content="@data.Description"/>
+    <meta name="keywords" content="@data.Keywords" />
+    <meta name="author" content="@data.Author" />
+    <meta name="viewport" content="@data.Viewport" />
+    if (baseMeta != null)
+    {
+        foreach (MetaData meta in baseMeta)
+        {
+            <meta name="@meta.Name" content="@meta.Content"/>
+        }
+    }
+    if (pageMeta != null)
+    {
+        foreach (MetaData meta in pageMeta)
+        {
+            <meta name="@meta.Name" content="@meta.Content" />
+        }
+    }
+}

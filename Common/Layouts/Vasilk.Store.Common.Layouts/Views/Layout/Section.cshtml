@@ -1,0 +1,7 @@
+﻿@model SectionInfo
+@if (Model != null && Model.Base.ID != Guid.Empty)
+{
+    <section id="@Model.Base.Name.UrlEncode()">
+        @Html.PlaceHolder(Model.Base.ID.ToString())
+    </section>
+}

@@ -1,0 +1,45 @@
+﻿@model Post
+@{ 
+
+}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                @Html.Vasilk().SharedPartial("_Menu")
+            </div>
+            <div class="col-lg-9">
+                @if (Model == null)
+                {
+                    <div class="text-center">@Html.Dictionary("/Content/khong-co-bai-viet", "Hiện tại chưa có bài viết")</div>
+                }
+                else
+                {
+                    NavigationUrl currentUrl = CustomContext.Item.NavigationUrl;
+                    List<NavigationUrl> urls = new List<NavigationUrl>();
+                    while (currentUrl != null)
+                    {
+                        urls.Insert(0, currentUrl);
+                        currentUrl = currentUrl.Parent;
+                    }
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <div class="d-none d-md-block">
+                                @foreach (NavigationUrl url in urls)
+                                {
+                                    <i class="icon fa fa-angle-double-right text-white"></i> <a class="text-white" href="@url.Url" target="_self">@url.Title</a>
+                                }
+                            </div>
+                            <div class="d-md-none text-white">
+                                @CustomContext.Item.NavigationUrl.Title
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        @Html.HtmlContent(Model.Content)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

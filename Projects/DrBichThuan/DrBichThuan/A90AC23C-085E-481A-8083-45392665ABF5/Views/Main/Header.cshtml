@@ -1,0 +1,31 @@
+﻿@{ 
+    ContactDetail contact = AppConstants.ContactDetail;
+    PageContent pageContent = CustomContext.Item?.Cast<PageContent>();
+    bool hideMapOnMobile = pageContent?.HideMapOnMobile ?? false;
+}
+@if (contact != null)
+{
+    string[] location = contact.GetMapLocation();
+    <div class="container pt-3 pb-3">
+        <div class="row">
+            <div class="col-lg-3 col-sm-4 text-center">
+                <span class="centerer"></span>
+                <div class="centered">
+                    <a href="@CustomContext.Store.WebsiteUrl" target="_self"><img class="img" src="@contact.Logo" alt="@contact.Title" /></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-8 text-center pb-3">
+                <span class="centerer"></span>
+                <div class="centered">
+                    <h1 class="text-red">@contact.Title</h1>
+                    <h2 class="text-red">@contact.Name</h2>
+                    <div class="text-primary pl-5 pr-5 text-heavy">@Html.Dictionary("/Header/dia-chi", "Địa chỉ"): @contact.Address</div>
+                    <div class="text-secondary text-heavy">@contact.SubTitle</div>
+                </div>
+            </div>
+            <div class="col-lg-3 @(hideMapOnMobile ? "d-none d-sm-block" : "")">
+                <div class="pt-100 google-map" data-adr="@contact.Address" data-lat="@location[0]" data-lng="@location[1]"></div>
+            </div>
+        </div>
+    </div>
+}

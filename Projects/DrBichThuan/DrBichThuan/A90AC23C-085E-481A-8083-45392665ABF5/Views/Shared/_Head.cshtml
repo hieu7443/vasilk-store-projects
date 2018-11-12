@@ -1,0 +1,12 @@
+﻿@Html.Vasilk().SharedPartial("_MetaData")
+@Html.Vasilk().RenderEditor()
+@Html.Vasilk().RenderGoogleAnalytic()
+@Html.Vasilk().SharedPartial("_BaseCss")
+@Html.Vasilk().RenderApplicationStyle(new { async = "" })
+<script>
+    var googleMapAvailable = false;
+    function initGoogleMap() {
+        googleMapAvailable = true;
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDr89O-ahiyYVEZCB50071PaeA-yoMIJJ4&callback=initGoogleMap" async defer></script>

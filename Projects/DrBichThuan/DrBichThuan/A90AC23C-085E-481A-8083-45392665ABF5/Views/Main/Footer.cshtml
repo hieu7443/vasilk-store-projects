@@ -1,0 +1,49 @@
+﻿@{
+    ContactDetail contact = AppConstants.ContactDetail;
+    MenuItem[] menu = AppConstants.Menu?.OrderBy(i => i.Index).ToArray();
+}
+<div class="container text-light-white pt-5 pb-5">
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="title text-white pb-2">@Html.Dictionary("/Footer/phong-kham-san-phu-khoa", "PHÒNG KHÁM SẢN PHỤ KHOA")</h3>
+            <div class="row pb-2">
+                <div class="col-lg-4">@Html.Dictionary("/Footer/dia-chi", "Địa chỉ"):</div>
+                <div class="col-lg-8">@contact.Address</div>
+            </div>
+            <div class="row pb-2">
+                <div class="col-lg-4">@Html.Dictionary("/Footer/dien-thoai", "Điện thoại"):</div>
+                <div class="col-lg-8">@Html.Raw(String.Join(" - ", contact.GetPhones().Select(i => $"<a class=\"text-light-white\" href=\"tel:{i}\" target=\"_blank\">{i}</a>")))</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3 class="title text-white pb-2">@Html.Dictionary("/Footer/chuyen-khoa", "CHUYÊN KHOA")</h3>
+            @if (menu != null)
+            {
+                <div class="row pb-2">
+                    <div class="col-12 col-lg-6">
+                        @for (int i = 0; i < menu.Length / 2.0; i++)
+                        {
+                            <div class="pb-2"><a class="text-light-white" href="@menu[i].GetUrl()" target="_self">@menu[i].Title</a></div>
+                        }
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        @for (int i = Convert.ToInt32(Math.Ceiling(menu.Length / 2.0)); i < menu.Length; i++)
+                        {
+                            <div class="pb-2"><a class="text-light-white" href="@menu[i].GetUrl()" target="_self">@menu[i].Title</a></div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-4">
+            <h3 class="title text-white pb-2">@Html.Dictionary("/Footer/gio-lam-viec", "GIỜ LÀM VIỆC")</h3>
+            @foreach (WorkHour workHour in contact.GetWorkHours().OrderBy(i => i.Index))
+            {
+                <div class="row pb-2">
+                    <div class="col-6 pr-0">@workHour.Day:</div>
+                    <div class="col-6">@Html.Raw(String.Join("<br/>", workHour.GetTimes()))</div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

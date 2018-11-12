@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    @Html.Vasilk().SharedPartial("_Head")
+</head>
+<body>
+    <div id="page-loading" class="cover white"><span class="centerer"></span><div class="centered"><div class="uil-ring-css"><span></span></div></div></div>
+    <header class="bg-light-pink position-relative hidden">
+        @Html.PlaceHolder("header")
+    </header>
+    <section id="body" class="position-relative bg-content overflow-visible pt-3 pb-3 hidden">
+        @Html.PlaceHolder("main")
+    </section>
+    <footer class="bg-dark position-relative hidden">
+        @Html.PlaceHolder("footer")
+    </footer>
+    <div class="modal fade" id="page-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" data-modal="#page-modal"></div>
+        </div>
+    </div>
+    @Html.Vasilk().SharedPartial("_Body")
+</body>
+</html>

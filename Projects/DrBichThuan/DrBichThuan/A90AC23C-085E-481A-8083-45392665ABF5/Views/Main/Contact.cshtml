@@ -1,0 +1,47 @@
+﻿@{ 
+    ContactDetail contact = AppConstants.ContactDetail;
+}
+@if (contact != null)
+{
+    string[] location = contact.GetMapLocation();
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 pb-3">
+                    <img class="card-img-top" src="@contact.Thumbnail" alt="@contact.Title">
+                </div>
+                <div class="col-md-7 pb-3">
+                    <h1 class="text-primary">@contact.Title</h1>
+                    <div class="pb-3">@Html.Raw(contact.Description)</div>
+                    <div class="row pb-3">
+                        <div class="col-3 pr-0">@Html.Dictionary("/Content/Contact/dia-chi", "Địa chỉ"):</div>
+                        <div class="col-9">@contact.Address</div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-3 pr-0">@Html.Dictionary("/Content/Contact/dien-thoai", "Điện thoại"):</div>
+                        <div class="col-9">@Html.Raw(String.Join(" - ", contact.GetPhones().Select(i => $"<a class=\"text-dark\" href=\"tel:{i}\" target=\"_blank\">{i}</a>")))</div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-3 pr-0">@Html.Dictionary("/Content/Contact/gio-lam-viec", "Giờ làm việc"):</div>
+                        <div class="col-9">
+                            @foreach (WorkHour workHour in contact.GetWorkHours().OrderBy(i => i.Index))
+                            {
+                                <div class="row">
+                                    <div class="col-4 pr-0">@workHour.Day</div>
+                                    <div class="col-8">@Html.Raw(String.Join("<br/>", workHour.GetTimes()))</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        @Html.Dictionary("/Content/Contact/vui-long-lien-he", "(Vui lòng liên hệ trước khi đến khám vì lịch trực của bác sĩ thay đổi)")
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-primary">@Html.Dictionary("/Content/Contact/ban-do-phong-kham", "Bản đồ phòng khám")</h2>
+                <div class="google-map" data-adr="@contact.Address" data-lat="@location[0]" data-lng="@location[1]" style="padding-top: 50%; min-height: 300px"></div>
+            </div>
+        </div>
+    </section>
+}

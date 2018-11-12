@@ -1,0 +1,9 @@
+﻿@{ 
+    Item item = CustomContext.Rendering.Source;
+}
+@if (item != null)
+{
+    Guid target = Guid.NewGuid();
+    <div data-ajax-content-target="@target"></div>
+    <button class="d-none" data-ajax-content data-url="@Url.Action("AjaxRender", "Main", new { key = item.ID })" data-target="@target"></button>
+}

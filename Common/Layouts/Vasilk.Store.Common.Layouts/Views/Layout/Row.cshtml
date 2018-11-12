@@ -1,0 +1,7 @@
+﻿@model RowInfo
+@if (Model != null && Model.Base.ID != Guid.Empty)
+{
+    <div class="row">
+        @Html.PlaceHolder(Model.Base.ID.ToString())
+    </div>
+}

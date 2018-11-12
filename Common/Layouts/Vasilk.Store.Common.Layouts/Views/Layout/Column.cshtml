@@ -1,0 +1,7 @@
+﻿@model ColumnInfo
+@if (Model != null && Model.Base.ID != Guid.Empty)
+{
+    <div class="@Model.ColumnClass">
+        @Html.PlaceHolder(Model.Base.ID.ToString())
+    </div>
+}

@@ -1,0 +1,7 @@
+﻿@model ContainerInfo
+@if (Model != null && Model.Base.ID != Guid.Empty)
+{
+    <div class="container">
+        @Html.PlaceHolder(Model.Base.ID.ToString())
+    </div>
+}
